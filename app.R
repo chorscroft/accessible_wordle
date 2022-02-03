@@ -3,14 +3,20 @@ library(magrittr)
 library(ggplot2)
 
 ui<-fluidPage(
-  ## Input from Wordle "Share" button
-  textInput("wordleIn",""),
-  ## Press Go button to generate text and image
-  actionButton("go","Go"),
-  ## Text output will appear here
-  verbatimTextOutput("result",placeholder = TRUE),
-  ## Image will appear here
+  titlePanel("Accessible wordle output"),
   mainPanel(
+    p("1. Click SHARE on Wordle"),
+    p("2. Paste into the text box"),
+    p("3. Press Go"),
+    p("4. Copy the text and the image into your social media of choice"),
+
+    ## Input from Wordle "Share" button
+    textInput("wordleIn",""),
+    ## Press Go button to generate text and image
+    actionButton("go","Go"),
+    ## Text output will appear here
+    verbatimTextOutput("result",placeholder = TRUE),
+    ## Image will appear here
     plotOutput("plot",width = "200px",height = "200px",)
   )
 )
