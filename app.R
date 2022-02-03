@@ -35,21 +35,30 @@ server <- function(input,output){
     for(wordle_line in wordle_lines[5:length(wordle_lines)]){
       ## count green letters
       green<-unlist(strsplit(wordle_line,""))=="🟩"
-      ## Generate text output
-      if (sum(green)==1){
-        green_text<-paste0(sum(green)," letter in the right place")
-      } else {
-        green_text<-paste0(sum(green)," letters in the right place")
-      }
       ## count yellow letters
       yellow<-unlist(strsplit(wordle_line,""))=="🟨"
-      ## Generate text output
-      if (sum(yellow)==1){
-        yellow_text<-paste0(", ",sum(yellow)," letter in the wrong place")
-      } else if (sum(yellow)>0){
-        yellow_text<-paste0(", ",sum(yellow)," letters in the wrong place")
+      if (sum(green)==0 & sum(yellow)==0){
+        green_text<-"No letters guessed correctly"
+        yellow_text<-""
       } else {
-        yellow_text=""
+        ## Generate text output
+        if (sum(green)==5){
+          green_text<-paste0("Word guessed correctly!")
+        } else if (sum(green)==1){
+          green_text<-paste0(sum(green)," letter in the right place")
+        } else {
+          green_text<-paste0(sum(green)," letters in the right place")
+        }
+        if (sum(yellow)>0){
+          green_text<-paste0(green_text,", ")
+        }
+        if (sum(yellow)==1){
+          yellow_text<-paste0(sum(yellow)," letter in the wrong place")
+        } else if (sum(yellow)>0){
+          yellow_text<-paste0(sum(yellow)," letters in the wrong place")
+        } else {
+          yellow_text<-""
+        }
       }
       ## Final text output for this line
       outputText<-paste0(outputText,"\n","Line ",currentline,": ", green_text, yellow_text)
