@@ -86,8 +86,8 @@ server <- function(input,output){
     ## change wordle output emoji colours into words
     wordle_lines<-unlist(strsplit(input$wordleIn," "))
     long_wordle<-unlist(strsplit(wordle_lines[5:length(wordle_lines)],""))
-    long_wordle[long_wordle=="🟩"]<-"green"
-    long_wordle[long_wordle=="🟨"]<-"yellow"
+    long_wordle[long_wordle=="🟩"]<-"green3"
+    long_wordle[long_wordle=="🟨"]<-"gold"
     long_wordle[long_wordle=="⬛"]<-"black"
     
     ## plot the image
