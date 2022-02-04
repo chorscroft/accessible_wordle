@@ -40,24 +40,35 @@ server <- function(input,output){
       if (sum(green)==0 & sum(yellow)==0){
         green_text<-"No letters guessed correctly"
         yellow_text<-""
+      } else if (sum(green)==5){
+        green_text<-paste0("Word guessed correctly!")
+        yellow_text<-""
+      } else if (sum(yellow)==5){
+        green_text<-paste0("All letters in the wrong place")
+        yellow_text<-""
       } else {
-        ## Generate text output
-        if (sum(green)==5){
-          green_text<-paste0("Word guessed correctly!")
-        } else if (sum(green)==1){
-          green_text<-paste0(sum(green)," letter in the right place")
+        if (sum(green)==0){
+          green_text<-""
         } else {
-          green_text<-paste0(sum(green)," letters in the right place")
+          pos_green<-which(green)
+          green_text<-switch(sum(green),
+                             paste0("letter ",pos_green," is in the right place"),
+                             paste0("letters ",pos_green[1]," and ",pos_green[2]," are in the right place"),
+                             paste0("letters ",pos_green[1],", ",pos_green[2],", and ",pos_green[3]," are in the right place"),
+                             paste0("letters ",pos_green[1],", ",pos_green[2],", ",pos_green[3],", and ",pos_green[4]," are in the right place"))
         }
-        if (sum(yellow)>0){
-          green_text<-paste0(green_text,", ")
+        if (sum(green)>0 & sum(yellow)>0){
+          green_text<-paste0(green_text,"; ")
         }
-        if (sum(yellow)==1){
-          yellow_text<-paste0(sum(yellow)," letter in the wrong place")
-        } else if (sum(yellow)>0){
-          yellow_text<-paste0(sum(yellow)," letters in the wrong place")
-        } else {
+        if (sum(yellow)==0){
           yellow_text<-""
+        } else {
+          pos_yellow<-which(yellow)
+          yellow_text<-switch(sum(yellow),
+                              paste0("letter ",pos_yellow," is in the wrong place"),
+                              paste0("letters ",pos_yellow[1]," and ",pos_yellow[2]," are in the wrong place"),
+                              paste0("letters ",pos_yellow[1],", ",pos_yellow[2],", and ",pos_yellow[3]," are in the wrong place"),
+                              paste0("letters ",pos_yellow[1],", ",pos_yellow[2],", ",pos_yellow[3],", and ",pos_yellow[4]," are in the wrong place"))
         }
       }
       ## Final text output for this line
