@@ -86,15 +86,15 @@ server <- function(input,output){
     ## change wordle output emoji colours into words
     wordle_lines<-unlist(strsplit(input$wordleIn," "))
     long_wordle<-unlist(strsplit(wordle_lines[5:length(wordle_lines)],""))
-    long_wordle[long_wordle=="🟩"]<-"green3"
+    long_wordle[long_wordle=="🟩"]<-"green"
     long_wordle[long_wordle=="🟨"]<-"gold"
     long_wordle[long_wordle=="⬛"]<-"black"
     
     ## plot the image
-    ggplot(,aes(rep(c(1:5),length(wordle_lines)-4),rep(c((length(wordle_lines)-4):1),each=5))) +
-      geom_point(col=long_wordle,pch=15,cex=10) + 
-      xlim(0,6) +
-      ylim(0,length(wordle_lines)-3) +
+    ggplot(, aes(rep(c(1:5),length(wordle_lines)-4),rep(c((length(wordle_lines)-4):1),each=5))) + 
+      geom_tile(aes(fill = long_wordle, size=2, width=0.95,height=0.95),show.legend = FALSE) +
+      scale_fill_manual(breaks=c("green","gold","black"),values = c("green3","gold","black")) +
+      coord_equal(expand = FALSE) +
       theme_void()
     
   }) %>%
